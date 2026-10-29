@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite the accompanying article."
+title: "Wastewater-dilution: observational causal benchmark for streamflow models used in dilution assessment"
+authors:
+  - family-names: Yeboah
+    given-names: Emmanuel
+    orcid: "https://orcid.org/0000-0003-3838-6837"
+  - family-names: Qiao
+    given-names: Jiajun
+  - family-names: Zhu
+    given-names: Qiankun
+license: MIT
+repository-code: "https://github.com/Cisco14k/Wastewater-dilution"
+date-released: 2026-10-29

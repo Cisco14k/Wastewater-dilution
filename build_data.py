@@ -4,7 +4,7 @@ import numpy as np, pandas as pd
 import rdaread as R
 from hydro import oudin_pet
 
-SRC = '/tmp/claude-0/-home-claude/277e979c-7d79-5a01-9b9e-645cafcc8533/scratchpad/dl/airGRdatasets/data'
+SRC = os.environ.get('AIRGR_DATA', 'airGRdatasets/data')  # data/ folder of the airGRdatasets package
 IDMAP = {'A273011002':'A','A605102001':'B','B222001001':'C','E540031001':'D','E645651001':'E',
          'F439000101':'F','H010002001':'G','H120101001':'H','H622101001':'I','J171171001':'J',
          'J421191001':'K','K134181001':'L','K265401001':'M','K731261001':'N','V123521001':'O',

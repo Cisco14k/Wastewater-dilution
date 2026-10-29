@@ -1,7 +1,7 @@
 """Shared configuration: data loading, chronological split, attributes."""
 import numpy as np, pandas as pd
 
-D = np.load('/home/claude/work/data/camels_fr19.npz', allow_pickle=True)
+D = np.load('data/camels_fr19.npz', allow_pickle=True)
 P, T, E, Q, H = D['P'], D['T'], D['E'], D['Q'], D['H']
 DATES = pd.to_datetime(D['dates'])
 IDS = list(D['ids'])
@@ -17,7 +17,7 @@ CAL = (YEAR >= 2000) & (YEAR <= 2014)    # conceptual models calibrate on train 
 
 def static_attributes():
     """Climate and physiographic attributes computed from forcing only, training years only (no discharge)."""
-    att = pd.read_csv('/home/claude/work/data/attributes_raw.csv')
+    att = pd.read_csv('data/attributes_raw.csv')
     m = TRAIN
     att['p_mean'] = P[:, m].mean(1)
     att['pet_mean'] = E[:, m].mean(1)

@@ -1,4 +1,5 @@
 """Model simulators under arbitrary forcing, and window interventions matching the DML estimand."""
+import os
 import json, glob, pickle
 import numpy as np
 from common import *
@@ -14,7 +15,7 @@ def dpet(Ta_new):
 
 def load_params(which):
     d = {}
-    for f in glob.glob(f'/home/claude/work/out/params_{which}_*.json'):
+    for f in glob.glob(f'out/params_{which}_*.json'):
         d.update(json.load(open(f)))
     return np.array([d[i]['x'] for i in IDS])
 
@@ -25,7 +26,7 @@ class Sim:
             self.pc = load_params('gr4jcn')
         except KeyError:
             self.pc = None
-        self.gbm = {v: pickle.load(open(f'/home/claude/work/out/gbm{v}.pkl', 'rb')) for v in 'AC'}
+        self.gbm = {v: pickle.load(open(f'out/gbm{v}.pkl', 'rb')) for v in 'AC'}
         self.lstm = {}
     def gr4j(self, Pa, Ta, Ea):
         return gr4j(Pa, Ea, self.pg)
@@ -41,7 +42,7 @@ class Sim:
         from lstm_np import LSTM
         if not hasattr(self, '_lstm_mod'):
             sys.argv = ['x', 'base', '0']
-            src = open('/home/claude/work/train_lstm.py').read().split('rng = np.random.default_rng(seed)')[0]
+            src = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'train_lstm.py')).read().split('rng = np.random.default_rng(seed)')[0]
             g = {}
             exec(src, g)
             self._lstm_mod = g
@@ -49,7 +50,7 @@ class Sim:
         X = g['build_X'](g['dyn_features'](Pa, Ta, Ea))
         ys = []
         for s in seeds:
-            f = f'/home/claude/work/out/lstm_{variant}_s{s}.npz'
+            f = f'out/lstm_{variant}_s{s}.npz'
             z = np.load(f)
             m = LSTM(X.shape[-1], g['HID']); m.set({k: z[k] for k in ('W', 'b', 'v', 'c')})
             ys.append(m.forward(X, keep=False)[0])

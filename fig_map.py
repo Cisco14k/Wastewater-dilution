@@ -1,4 +1,5 @@
 """Figure 1: study area. Real geography (Natural Earth 10 m, IGN-derived regions from france-geojson)."""
+import os
 import json
 import numpy as np, pandas as pd
 import matplotlib; matplotlib.use('Agg')
@@ -8,7 +9,7 @@ from matplotlib.collections import PatchCollection, LineCollection
 from common import *
 import style
 
-GEO = '/tmp/claude-0/-home-claude/277e979c-7d79-5a01-9b9e-645cafcc8533/scratchpad/dl'
+GEO = os.environ.get('GEO_DIR', 'geo')  # holds ne/geojson/*.geojson and fr/regions-version-simplifiee.geojson
 sig = hydro_signatures()
 sig.to_csv('out/signatures.csv', index=False)
 
